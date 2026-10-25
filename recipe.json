@@ -1,0 +1,53 @@
+{
+ "name": "fishtank2",
+ "title": "FishTank2 (DFI, 1997): a Risc PC demo",
+ "platform": "acorn-riscpc",
+ "doc": "A recipe: how to turn a user's own copy of the demo into a native executable. It holds no game data: the inputs are recognised by content (see $SS/tools/weave.py). The input is DFI's demo collection as Acorn User's CD 6 (December 1998) has it: the Spark archive EVOLA/CLASSICS/MODERN/DFI, copied off the CD (its !FishTank2 is what's used), or !FishTank2 itself, as a zip or a directory.",
+ "inputs": {
+  "containers": {},
+  "formats": [
+   "spark",
+   "zip",
+   "directory"
+  ]
+ },
+ "discs": [
+  {
+   "name": "dfi",
+   "title": "DFI's demos (Acorn User CD 6: EVOLA.CLASSICS.MODERN.DFI): !FishTank2 - Fishtank2 (packed), QTMTracker 1.27, ModeFile",
+   "known_images": [
+    "c3494a80a35b42e9c0d90013ab99a156b53f264a3ded54eddd979ea8e94fe054"
+   ],
+   "key_files": {
+    "!FishTank2/!Help": "4b059937ec0f6a7a30a4888c28e00d3836891e81d3489c52c94b9cd31d4f17fb",
+    "!FishTank2/!Run": "b0060ae7f511f242449a6d1ded404d14e02f650e7524de273ace938c6ce44ed8",
+    "!FishTank2/!Sprites": "a321d1d0c6aa18a26c8f4568ee0bbff37f6b394a1684a89a999926088f7f55c6",
+    "!FishTank2/Fishtank2": "157b66e7543df2c1d0cb8d1a9dd623db0f66e205863b942e7a4622a6057a0e61",
+    "!FishTank2/ModeFile": "e24260a8008c409ab95569b0fd6154ff0f071310a312cf7c247db7d758d55a46",
+    "!FishTank2/QTMTracker": "6df0604a4d42c077c2fb718705bd7a84e03142644e2a11db0501607915085715"
+   },
+   "game_dirs": [
+    "!FishTank2"
+   ]
+  }
+ ],
+ "build": [
+  "python3 -I \"$WEAVE\" extract . INPUTS",
+  "python3 -I tools/unpack.py",
+  "make -C recomp regen",
+  "make -C recomp"
+ ],
+ "output": "recomp/fishtank2",
+ "requires": {
+  "superspider": "~/stuff/superspider, or $SUPERSPIDER (dune build): analyse, gen (--no-smc), tools/weave.py, tools/arm2.py",
+  "libroger": "~/stuff/libroger, or make ROGER=... (SpriteExtend's JPEG SWIs, VDU variable 172)",
+  "host": [
+   "python3",
+   "ocaml + dune",
+   "gcc",
+   "SDL3 (pkg-config sdl3)",
+   "stb_image (Debian: libstb-dev), for libroger"
+  ]
+ },
+ "run": "cd recomp && ./fishtank2"
+}
